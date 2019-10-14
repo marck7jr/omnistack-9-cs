@@ -1,0 +1,29 @@
+﻿@page "/new"
+
+<form>
+    <label 
+           id="thumbnail">
+        <input id="thumbnail" type="file" />
+        <img src="/assets/camera.svg" alt="Select img" />
+    </label>
+
+    <label htmlFor="company">EMPRESA *</label>
+    <input id="company"
+           placeholder="Sua empresa incrível"
+           type="text"
+    />
+
+    <label htmlFor="techs">TECNOLOGIAS * <span>(separadas por vírgula)</span></label>
+    <input id="techs"
+           placeholder="Quais tecnologias usam?"
+           type="text"
+    />
+
+    <label htmlFor="price">VALOR DA DIÁRIA * <span>(em branco para GRATUITO)</span></label>
+    <input id="price"
+           placeholder="Valor cobrado por dia"
+           type="text"
+    />
+
+    <button type="submit" class="btn">Cadastrar</button>
+</form>
