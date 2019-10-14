@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AirCnC.Backend.Models
+namespace AirCnC.Shared.Models
 {
     public class Booking : Model
     {

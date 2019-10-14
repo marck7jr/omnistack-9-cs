@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace AirCnC.Backend.Models
+namespace AirCnC.Shared.Models
 {
     public abstract class Model
     {

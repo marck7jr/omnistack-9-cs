@@ -1,4 +1,4 @@
-﻿namespace AirCnC.Backend.Models
+﻿namespace AirCnC.Shared.Models
 {
     public class User : Model
     {

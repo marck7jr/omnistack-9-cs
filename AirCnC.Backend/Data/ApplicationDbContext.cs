@@ -1,4 +1,4 @@
-﻿using AirCnC.Backend.Models;
+﻿using AirCnC.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirCnC.Backend.Data
