@@ -1,4 +1,5 @@
-﻿@page "/dashboard"
+﻿@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@page "/dashboard"
 
 <ul class="spot-list">
     <li>
@@ -11,3 +12,13 @@
 <NavLink href="/new">
     <button class="btn">Cadastrar novo spot</button>
 </NavLink>
+
+@code {
+    private User User { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        User = await LocalStorage.GetItemAsync<User>("user");
+        Console.WriteLine(User.Guid);
+    }
+}

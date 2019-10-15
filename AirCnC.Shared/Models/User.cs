@@ -1,4 +1,6 @@
-﻿namespace AirCnC.Shared.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AirCnC.Shared.Models
 {
     public class User : Model
     {

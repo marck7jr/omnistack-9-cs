@@ -1,20 +1,43 @@
-﻿@page "/"
+﻿@inject NavigationManager NavigationManager
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@page "/"
 
 <p>
     Ofereça <strong>spots</strong> para programadores e encontre <strong>talentos</strong> para sua empresa.
 </p>
 
-<form action="post">
+<form action="post" @onsubmit="HandleSubmitAsync">
     <label htmlFor="email">E-MAIL *</label>
 
     <input type="email"
            id="email"
            placeholder="Seu melhor e-mail"
+           @bind="User.Email" @bind:event="oninput"
     />
 
     <button class="btn" type="submit">Entrar</button>
 </form>
 
-@{ 
+@code{
+    private User User { get; set; } = new User();
 
+    private async Task HandleSubmitAsync()
+    {
+        using (var client = new HttpClient())
+        {
+            client.BaseAddress = new Uri("https://localhost:5001");
+
+            var content = new StringContent(JsonSerializer.Serialize<User>(User), Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/users", content);
+
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                User = JsonSerializer.Deserialize<User>(await response.Content.ReadAsStringAsync());
+                await LocalStorage.SetItemAsync("user", User);
+
+                NavigationManager.NavigateTo("/dashboard");
+            }
+        }
+    }
 }

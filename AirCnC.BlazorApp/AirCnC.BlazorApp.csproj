@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.ProtectedBrowserStorage" Version="0.1.0-alpha.19406.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
   </ItemGroup>
 
@@ -22,6 +24,10 @@
     <None Include="compilerconfig.json" />
     <None Include="wwwroot\assets\camera.svg" />
     <None Include="wwwroot\assets\logo.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AirCnC.Shared\AirCnC.Shared.csproj" />
   </ItemGroup>
 
 </Project>
