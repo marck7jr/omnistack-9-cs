@@ -12,8 +12,7 @@
     <input type="email"
            id="email"
            placeholder="Seu melhor e-mail"
-           @bind="User.Email" @bind:event="oninput"
-    />
+           @bind="User.Email" @bind:event="oninput" />
 
     <button class="btn" type="submit">Entrar</button>
 </form>
@@ -31,7 +30,7 @@
 
             var response = await client.PostAsync("/api/users", content);
 
-            if (response.StatusCode == HttpStatusCode.Created)
+            if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created)
             {
                 User = JsonSerializer.Deserialize<User>(await response.Content.ReadAsStringAsync());
                 await LocalStorage.SetItemAsync("user", User);

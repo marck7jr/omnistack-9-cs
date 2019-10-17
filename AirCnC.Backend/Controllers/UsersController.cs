@@ -64,17 +64,17 @@ namespace AirCnC.Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> PostAsync([FromBody] User user)
+        public async Task<ActionResult<User>> PostAsync([FromBody] User newUser)
         {
-            if (!(await _context.Users.ToListAsync()).Any(x => x.Email == user.Email))
+            if (await _context.Users.FirstOrDefaultAsync(x => x.Email == newUser.Email) is User user)
             {
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-
-                return CreatedAtAction("Get", new { guid = user.Guid }, user);
+                return user;
             }
 
-            return BadRequest(new { error = "Email in use." });
+            _context.Add(newUser);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("Get", new { guid = newUser.Guid }, newUser);
         }
 
         [HttpDelete("{guid:guid}")]
