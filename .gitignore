@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+/images/**
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -431,3 +432,4 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+/AirCnC.Backend/wwwroot/images

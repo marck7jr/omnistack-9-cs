@@ -6,6 +6,6 @@ namespace AirCnC.Shared.Models
     public abstract class Model
     {
         [Key]
-        public Guid Guid { get; set; } = Guid.NewGuid();
+        public Guid Guid { get; set; }
     }
 }

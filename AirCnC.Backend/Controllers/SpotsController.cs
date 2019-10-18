@@ -81,10 +81,10 @@ namespace AirCnC.Backend.Controllers
         {
             if (await _context.Users.FindAsync(userGuid) is User user)
             {
-                spot.User = user;
-
-                if (Request.Form.Files[0] is IFormFile file && file.Length > 0)
+                if (Request.Form.Files.FirstOrDefault() is IFormFile file && file.Length > 0)
                 {
+                    Console.WriteLine("Achou o arquivo!");
+
                     var filePath = Path.Combine("wwwroot", "images", $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}");
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -97,6 +97,7 @@ namespace AirCnC.Backend.Controllers
                         .Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
                 }
 
+                spot.User = user;
                 _context.Spots.Add(spot);
                 await _context.SaveChangesAsync();
 

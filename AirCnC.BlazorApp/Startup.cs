@@ -1,3 +1,4 @@
+using Blazor.FileReader;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,7 @@ namespace AirCnC.BlazorApp
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddBlazoredLocalStorage();
+            services.AddFileReaderService(options => options.InitializeOnFirstCall = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

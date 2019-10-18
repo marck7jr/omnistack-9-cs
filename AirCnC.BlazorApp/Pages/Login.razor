@@ -1,12 +1,12 @@
 ﻿@inject NavigationManager NavigationManager
-@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject ILocalStorageService LocalStorage
 @page "/"
 
 <p>
     Ofereça <strong>spots</strong> para programadores e encontre <strong>talentos</strong> para sua empresa.
 </p>
 
-<form action="post" @onsubmit="HandleSubmitAsync">
+<form @onsubmit="OnSubmitAsync">
     <label htmlFor="email">E-MAIL *</label>
 
     <input type="email"
@@ -19,22 +19,25 @@
 
 @code{
     private User User { get; set; } = new User();
+    private string UserGuid { get; set; }
 
-    private async Task HandleSubmitAsync()
+    private async Task OnSubmitAsync()
     {
         using (var client = new HttpClient())
         {
             client.BaseAddress = new Uri("https://localhost:5001");
 
-            var content = new StringContent(JsonSerializer.Serialize<User>(User), Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonConvert.SerializeObject(User), Encoding.UTF8, "application/json");
 
             var response = await client.PostAsync("/api/users", content);
 
             if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created)
             {
-                User = JsonSerializer.Deserialize<User>(await response.Content.ReadAsStringAsync());
-                await LocalStorage.SetItemAsync("user", User);
+                Console.WriteLine(await response.Content.ReadAsStringAsync());
+                UserGuid = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync()).Guid.ToString();
+                Console.WriteLine($"Sessão Iniciada com: {UserGuid}");
 
+                await LocalStorage.SetItemAsync("user", UserGuid);
                 NavigationManager.NavigateTo("/dashboard");
             }
         }

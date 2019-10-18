@@ -2,11 +2,17 @@
 @page "/dashboard"
 
 <ul class="spot-list">
-    <li>
-        <header />
-        <strong></strong>
-        <span></span>
-    </li>
+    @if (Spots != null)
+    {
+        foreach (var spot in Spots)
+        {
+            <li @key="spot.Guid">
+                <header style="background-image: url(@($"\"https://localhost:5001{spot.Thumbnail}\"")" />
+                <strong>@(spot.Company)</strong>
+                <span>@(spot.Price > 0 ? $"R$ {spot.Price}" : "GRATUITO")</span>
+            </li>
+        }
+    }
 </ul>
 
 <NavLink href="/new">
@@ -14,11 +20,21 @@
 </NavLink>
 
 @code {
-    private User User { get; set; }
+    private string UserGuid { get; set; }
+    private IEnumerable<Spot> Spots { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        User = await LocalStorage.GetItemAsync<User>("user");
-        Console.WriteLine(User.Guid);
+        UserGuid = await LocalStorage.GetItemAsync<string>("user");
+        Console.WriteLine($"Usuário Atual: {UserGuid}");
+
+        using (var client = new HttpClient())
+        {
+            client.BaseAddress = new Uri("https://localhost:5001/api");
+            client.DefaultRequestHeaders.Add("userGuid", UserGuid);
+
+            var response = await client.GetAsync("/dashboard");
+            Spots = JsonConvert.DeserializeObject<IEnumerable<Spot>>(await response.Content.ReadAsStringAsync());
+        }
     }
 }

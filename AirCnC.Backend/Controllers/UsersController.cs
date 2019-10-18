@@ -68,6 +68,7 @@ namespace AirCnC.Backend.Controllers
         {
             if (await _context.Users.FirstOrDefaultAsync(x => x.Email == newUser.Email) is User user)
             {
+                Console.WriteLine("Usuário encontrado: " + user.Guid.ToString());
                 return user;
             }
 

@@ -1,9 +1,11 @@
-﻿@page "/new"
+﻿@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
+@inject IFileReaderService FileReaderService
+@page "/new"
 
-<form>
-    <label 
-           id="thumbnail">
-        <input id="thumbnail" type="file" />
+<form @onsubmit="OnSubmitAsync">
+    <label id="thumbnail" style="background-image: url(@FileData)">
+        <input id="thumbnail" type="file" @ref="InputFileTypeElement" @onchange="ThumbnailOnChangeAsync" />
         <img src="/assets/camera.svg" alt="Select img" />
     </label>
 
@@ -11,19 +13,81 @@
     <input id="company"
            placeholder="Sua empresa incrível"
            type="text"
-    />
+           @bind="Spot.Company" />
 
     <label htmlFor="techs">TECNOLOGIAS * <span>(separadas por vírgula)</span></label>
     <input id="techs"
            placeholder="Quais tecnologias usam?"
            type="text"
-    />
+           @bind="Spot.Techs" />
 
     <label htmlFor="price">VALOR DA DIÁRIA * <span>(em branco para GRATUITO)</span></label>
     <input id="price"
            placeholder="Valor cobrado por dia"
            type="text"
-    />
+           @bind="Spot.Price" />
 
     <button type="submit" class="btn">Cadastrar</button>
 </form>
+
+@code {
+    private string UserGuid { get; set; }
+    private Spot Spot { get; set; } = new Spot();
+    private IFileReference File { get; set; }
+    private string FileData { get; set; }
+    private ElementReference InputFileTypeElement { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserGuid = await LocalStorage.GetItemAsync<string>("user");
+    }
+
+    private async void ThumbnailOnChangeAsync(EventArgs args)
+    {
+        File = (await FileReaderService.CreateReference(InputFileTypeElement).EnumerateFilesAsync()).FirstOrDefault();
+
+        using (var stream = await File.CreateMemoryStreamAsync(4096))
+        {
+            FileData = $"data:image/jpg;base64,{Convert.ToBase64String(stream.ToArray())}";
+            StateHasChanged();
+        }
+    }
+
+    private async void OnSubmitAsync(EventArgs args)
+    {
+        using (var client = new HttpClient())
+        {
+            client.BaseAddress = new Uri("https://localhost:5001");
+            client.DefaultRequestHeaders.Add("userGuid", UserGuid);
+
+            using (var content = new MultipartFormDataContent())
+            {
+                var values = new[]
+                {
+                    new KeyValuePair<string, string> ("Guid", Spot.Guid.ToString()),
+                    new KeyValuePair<string, string> ("Company", Spot.Company),
+                    new KeyValuePair<string, string> ("Techs", Spot.Techs),
+                    new KeyValuePair<string, string> ("Price", Spot.Price.ToString()),
+                };
+
+                foreach (var keyValuePair in values)
+                {
+                    content.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
+                }
+
+                using (var stream = await File.CreateMemoryStreamAsync(4096))
+                {
+                    content.Add(new ByteArrayContent(stream.ToArray()), "thumbnail", "thumbnail.png");
+                }
+
+                var response = await client.PostAsync("/api/spots", content);
+
+                if (response.StatusCode == HttpStatusCode.Created)
+                {
+                    NavigationManager.NavigateTo("/dashboard");
+                }
+            }
+
+        }
+    }
+}
