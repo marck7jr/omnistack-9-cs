@@ -2,10 +2,16 @@
 {
     public class Spot : Model
     {
-        public string Thumbnail { get; set; }
-        public string Company { get; set; }
-        public double Price { get; set; }
-        public string Techs { get; set; }
-        public User User { get; set; }
+        private string thumbnail;
+        private string company;
+        private double price;
+        private string techs;
+        private User user;
+
+        public string Thumbnail { get => thumbnail; set => Set(ref thumbnail, value); }
+        public string Company { get => company; set => Set(ref company, value); }
+        public double Price { get => price; set => Set(ref price, value); }
+        public string Techs { get => techs; set => Set(ref techs, value); }
+        public User User { get => user; set => Set(ref user, value); }
     }
 }

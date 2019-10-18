@@ -2,6 +2,8 @@
 {
     public class User : Model
     {
-        public string Email { get; set; }
+        private string email;
+
+        public string Email { get => email; set => Set(ref email, value); }
     }
 }
