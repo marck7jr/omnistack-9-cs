@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AirCnC.Backend.Helpers
+namespace AirCnC.Shared.Helpers
 {
     public static class StringHelper
     {

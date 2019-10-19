@@ -1,5 +1,5 @@
 ﻿using AirCnC.Backend.Data;
-using AirCnC.Backend.Helpers;
+using AirCnC.Shared.Helpers;
 using AirCnC.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
