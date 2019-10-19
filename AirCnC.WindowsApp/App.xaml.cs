@@ -1,19 +1,12 @@
 ﻿using AirCnC.WindowsApp.Views;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace AirCnC.WindowsApp
@@ -40,12 +33,10 @@ namespace AirCnC.WindowsApp
         /// <param name="e">Detalhes sobre a solicitação e o processo de inicialização.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            // Não repita a inicialização do aplicativo quando a Janela já tiver conteúdo,
-            // apenas verifique se a janela está ativa
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame rootFrame))
             {
+                ApplyExtendedViewIntoTitleBar();
+
                 // Crie um Quadro para atuar como o contexto de navegação e navegue para a primeira página
                 rootFrame = new Frame();
 
@@ -96,6 +87,24 @@ namespace AirCnC.WindowsApp
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Salvar o estado do aplicativo e parar qualquer atividade em segundo plano
             deferral.Complete();
+        }
+
+        private static void ApplyExtendedViewIntoTitleBar()
+        {
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+            var accentBaseColor = (Color)Current.Resources["AirCnCAccentBaseColor"];
+            var accentAltColor = (Color)Current.Resources["AirCnCAccentAltColor"];
+
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonForegroundColor = accentBaseColor;
+
+            titleBar.ButtonHoverBackgroundColor = accentBaseColor;
+            titleBar.ButtonHoverForegroundColor = Colors.White;
+
+            titleBar.ButtonPressedBackgroundColor = accentAltColor;
+            titleBar.ButtonPressedForegroundColor = Colors.White;
         }
     }
 }

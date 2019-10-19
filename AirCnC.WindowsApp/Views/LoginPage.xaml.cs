@@ -1,11 +1,9 @@
 ﻿using AirCnC.Shared.Models;
 using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

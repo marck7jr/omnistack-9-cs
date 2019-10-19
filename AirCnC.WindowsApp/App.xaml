@@ -7,6 +7,7 @@
 
     <Application.Resources>
         <ResourceDictionary>
+            
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
                     <ResourceDictionary.MergedDictionaries>
@@ -14,6 +15,13 @@
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <Color x:Key="AirCnCAccentBaseColor">#f05a5b</Color>
+                    <Color x:Key="AirCnCAccentAltColor">#e14f50</Color>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 

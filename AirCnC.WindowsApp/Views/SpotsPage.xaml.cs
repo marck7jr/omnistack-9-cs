@@ -1,15 +1,7 @@
 ﻿using AirCnC.Shared.Helpers;
-using AirCnC.Shared.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Web;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // O modelo de item de Página em Branco está documentado em https://go.microsoft.com/fwlink/?LinkId=234238
