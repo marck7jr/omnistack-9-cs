@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="AirCnC.WindowsApp.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AirCnC.WindowsApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" RequestedTheme="Light">
+
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/background.jpg" Stretch="UniformToFill"/>
+    </Page.Background>
+
+    <Grid>
+        <StackPanel x:Name="LoginFomr" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    MinWidth="480"
+                    Padding="24" Spacing="8" CornerRadius="4"
+                    Background="{ThemeResource SystemControlAcrylicElementBrush}">
+            <Image Source="/Assets/logo.png" Height="40"/>
+            <TextBox Header="Seu E-mail *" Text="{x:Bind User.Email, Mode=TwoWay}" IsSpellCheckEnabled="False" IsTextScaleFactorEnabled="False" PlaceholderText="Seu e-mail" CornerRadius="4" InputScope="EmailNameOrAddress"/>
+            <TextBox x:Name="TechsTextBox" Header="Tecnologias *"  PlaceholderText="Tecnologias de interesse" CornerRadius="4"/>
+            <Button x:Name="SubmitButton" 
+                    Style="{ThemeResource AccentButtonStyle}" Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,96,0,0" Padding="12, 8" CornerRadius="4"
+                    Click="SubmitButton_Click">
+                <Button.Content>
+                    <TextBlock Text="Encontrar spots" Style="{ThemeResource BaseTextBlockStyle}"/>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>

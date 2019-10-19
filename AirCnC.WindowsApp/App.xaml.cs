@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirCnC.WindowsApp.Views;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace AirCnC.WindowsApp
                     // Quando a pilha de navegação não for restaurada, navegar para a primeira página,
                     // configurando a nova página passando as informações necessárias como um parâmetro
                     // de navegação
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(LoginPage));
                 }
                 // Verifique se a janela atual está ativa
                 Window.Current.Activate();
