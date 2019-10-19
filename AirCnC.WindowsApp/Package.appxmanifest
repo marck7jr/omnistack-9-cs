@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="df46041b-edc0-494c-9908-43a48245ed65"
+    Name="AirCnC"
     Publisher="CN=lucim"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="df46041b-edc0-494c-9908-43a48245ed65" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>AirCnC.WindowsApp</DisplayName>
+    <DisplayName>AirCnC</DisplayName>
     <PublisherDisplayName>lucim</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -32,13 +32,14 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="AirCnC.WindowsApp.App">
       <uap:VisualElements
-        DisplayName="AirCnC.WindowsApp"
+        DisplayName="AirCnC"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="AirCnC.WindowsApp"
-        BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        BackgroundColor="#FFFFFF">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="AirCnC" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
+        </uap:DefaultTile >
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#FFFFFF"/>
       </uap:VisualElements>
     </Application>
   </Applications>
