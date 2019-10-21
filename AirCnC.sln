@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirCnC.Shared", "AirCnC.Sha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCnC.WindowsApp", "AirCnC.WindowsApp\AirCnC.WindowsApp.csproj", "{870ED424-93F4-4C6E-8EDE-5E6CD3CA1E6A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{904E046C-4243-4C54-AD66-93CFDDEBA1D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{B9CC6478-9C85-49CA-A370-E7EFD1FF5941}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7DFB0178-320F-4F23-B78D-841486CE2FD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +120,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{95867FD8-445B-4F5D-8AE5-5AF3623FF399} = {7DFB0178-320F-4F23-B78D-841486CE2FD7}
+		{F5E62696-0101-4859-8F9B-4927BC08945C} = {B9CC6478-9C85-49CA-A370-E7EFD1FF5941}
+		{98CFB6FF-794E-4143-8C7A-00BACE03D977} = {904E046C-4243-4C54-AD66-93CFDDEBA1D7}
+		{870ED424-93F4-4C6E-8EDE-5E6CD3CA1E6A} = {B9CC6478-9C85-49CA-A370-E7EFD1FF5941}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD6B33F1-F2A9-4894-B22E-BEE328384121}

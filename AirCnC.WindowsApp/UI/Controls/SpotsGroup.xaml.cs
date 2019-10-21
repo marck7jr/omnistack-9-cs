@@ -6,8 +6,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Web;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Imaging;
 
 // O modelo de item de Controle de Usuário está documentado em https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -15,7 +15,7 @@ namespace AirCnC.WindowsApp.UI.Controls
 {
     public sealed partial class SpotsGroup : UserControl
     {
-        public string Tech { get; set; }
+        public string Tech { get => DataContext as string; }
         public ObservableCollection<Spot> Spots { get; set; } = new ObservableCollection<Spot>();
         public SpotsGroup()
         {
@@ -40,17 +40,16 @@ namespace AirCnC.WindowsApp.UI.Controls
             };
         }
 
-        public static BitmapImage GetBitmapImage(string url)
+        private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            return new BitmapImage()
-            {
-                UriSource = new Uri($"https://localhost:5001{url}")
-            };
-        }
+            var dialog = new BookingDialog();
 
-        public static string GetPriceString(double price)
-        {
-            return price > 0 ? $"R$ {price}" : "Gratuito";
+            dialog.DataContext = e.ClickedItem as Spot;
+
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                await new MessageDialog("Reserva solicitada com sucesso.").ShowAsync();
+            }
         }
     }
 }

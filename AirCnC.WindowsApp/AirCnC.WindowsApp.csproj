@@ -124,8 +124,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Controls\BookingDialog.xaml.cs">
+      <DependentUpon>BookingDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Controls\SpotsGroup.xaml.cs">
       <DependentUpon>SpotsGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\SpotView.xaml.cs">
+      <DependentUpon>SpotView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -204,7 +210,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="UI\Controls\BookingDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Controls\SpotsGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\SpotView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

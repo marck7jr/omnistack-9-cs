@@ -23,7 +23,7 @@
         <ListView Grid.Row="1" ItemsSource="{x:Bind Techs}" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="x:String">
-                    <controls:SpotsGroup Tech="{x:Bind ToString()}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <controls:SpotsGroup HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

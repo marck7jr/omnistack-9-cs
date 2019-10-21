@@ -21,21 +21,10 @@
             <Run Text="{x:Bind Tech}" FontWeight="Bold" />
         </TextBlock>
 
-        <GridView Grid.Row="1" ItemsSource="{x:Bind Spots}">
+        <GridView Grid.Row="1" ItemsSource="{x:Bind Spots}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="models:Spot">
-                    <Grid Height="200" Width="200" Background="White" CornerRadius="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Image Grid.Row="0" Source="{x:Bind local:SpotsGroup.GetBitmapImage(Thumbnail)}" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
-                        <StackPanel Grid.Row="1" Padding="8" Spacing="2">
-                            <TextBlock Text="{x:Bind Company}" Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock Text="{x:Bind local:SpotsGroup.GetPriceString(Price)}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="ForestGreen"/>
-                        </StackPanel>
-                    </Grid>
+                    <local:SpotView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Height="200" Width="200"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>

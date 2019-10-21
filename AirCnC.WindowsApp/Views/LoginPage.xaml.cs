@@ -35,7 +35,7 @@ namespace AirCnC.WindowsApp.Views
                 if (response.IsSuccessStatusCode)
                 {
                     User = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
-                    ApplicationData.Current.LocalSettings.Values["User"] = JsonConvert.SerializeObject(User);
+                    ApplicationData.Current.LocalSettings.Values["userGuid"] = JsonConvert.SerializeObject(User);
 
                     Frame.Navigate(typeof(SpotsPage), TechsTextBox.Text);
                 }
