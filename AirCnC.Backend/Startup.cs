@@ -1,4 +1,5 @@
 using AirCnC.Backend.Data;
+using AirCnC.Backend.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
@@ -35,6 +36,7 @@ namespace AirCnC.Backend
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.ConnectionString));
             services.AddControllers();
             services.AddDirectoryBrowser();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +58,7 @@ namespace AirCnC.Backend
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<BookingHub>("/bookings");
             });
         }
     }

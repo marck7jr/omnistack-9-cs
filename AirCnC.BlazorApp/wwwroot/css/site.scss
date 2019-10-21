@@ -143,3 +143,32 @@ body {
         }
     }
 }
+
+ul.notifications {
+    list-style: none;
+    margin-bottom: 15px;
+
+    li {
+
+        p {
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        button {
+            margin-right: 10px;
+            border: none;
+            font-weight: bold;
+            margin-top: 10px;
+            
+        }
+
+        button.accept {
+            color: #84C870;
+        }
+
+        button.reject {
+            color: #E55E5E;
+        }
+    }
+}

@@ -1,7 +1,8 @@
 ﻿using AirCnC.Shared.Models;
+using AirCnC.WindowsApp.Helpers;
+using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using Windows.Storage;
@@ -38,7 +39,10 @@ namespace AirCnC.WindowsApp.UI.Controls
 
                 if (response.IsSuccessStatusCode)
                 {
-
+                    if (JsonConvert.DeserializeObject<Booking>(await response.Content.ReadAsStringAsync()) is Booking booking)
+                    {
+                        await BookingHubHelper.Connection.InvokeAsync("SendBooking", booking.Spot.User.Guid.ToString(), await response.Content.ReadAsStringAsync());
+                    }
                 }
             }
         }

@@ -25,6 +25,7 @@ namespace AirCnC.BlazorApp
             services.AddServerSideBlazor();
             services.AddBlazoredLocalStorage();
             services.AddFileReaderService(options => options.InitializeOnFirstCall = true);
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

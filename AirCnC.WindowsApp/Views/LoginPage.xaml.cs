@@ -37,6 +37,8 @@ namespace AirCnC.WindowsApp.Views
                     User = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
                     ApplicationData.Current.LocalSettings.Values["userGuid"] = JsonConvert.SerializeObject(User);
 
+                    App.UseBookingHub(User.Guid);
+
                     Frame.Navigate(typeof(SpotsPage), TechsTextBox.Text);
                 }
             }

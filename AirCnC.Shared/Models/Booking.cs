@@ -10,7 +10,7 @@ namespace AirCnC.Shared.Models
         private Spot spot;
 
         public DateTime Date { get => date; set => Set(ref date, value); }
-        public bool Approved { get => approved; set => Set(ref approved, value); }
+        public bool IsApproved { get => approved; set => Set(ref approved, value); }
         public User User { get => user; set => Set(ref user, value); }
         public Spot Spot { get => spot; set => Set(ref spot, value); }
     }

@@ -33,9 +33,7 @@
 
             if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created)
             {
-                Console.WriteLine(await response.Content.ReadAsStringAsync());
                 UserGuid = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync()).Guid.ToString();
-                Console.WriteLine($"Sessão Iniciada com: {UserGuid}");
 
                 await LocalStorage.SetItemAsync("user", UserGuid);
                 NavigationManager.NavigateTo("/dashboard");

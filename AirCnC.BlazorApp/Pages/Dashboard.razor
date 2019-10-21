@@ -1,6 +1,18 @@
 ﻿@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 @page "/dashboard"
 
+    <ul class="notifications">
+        @foreach (var booking in Bookings)
+        {
+            <li @key="booking.Guid">
+                <p>
+                    <strong>@booking.User.Email</strong> solicitou uma reserva em <strong>@booking.Spot.Company</strong> para o dia <strong>@booking.Date.ToShortDateString()</strong>.
+                </p>
+                <button class="accept" @onclick="async () => { await HandleRequest(booking, true); }">ACEITAR</button>
+                <button class="reject" @onclick="async () => { await HandleRequest(booking, false); }">RECUSAR</button>
+            </li>
+        }
+    </ul>
 <ul class="spot-list">
     @if (Spots != null)
     {
@@ -21,12 +33,13 @@
 
 @code {
     private string UserGuid { get; set; }
-    private IEnumerable<Spot> Spots { get; set; }
+    private HubConnection Connection { get; set; }
+    private List<Spot> Spots { get; set; }
+    private List<Booking> Bookings { get; set; } = new List<Booking>();
 
     protected override async Task OnInitializedAsync()
     {
         UserGuid = await LocalStorage.GetItemAsync<string>("user");
-        Console.WriteLine($"Usuário Atual: {UserGuid}");
 
         using (var client = new HttpClient())
         {
@@ -34,7 +47,36 @@
             client.DefaultRequestHeaders.Add("userGuid", UserGuid);
 
             var response = await client.GetAsync("/dashboard");
-            Spots = JsonConvert.DeserializeObject<IEnumerable<Spot>>(await response.Content.ReadAsStringAsync());
+            Spots = JsonConvert.DeserializeObject<List<Spot>>(await response.Content.ReadAsStringAsync());
         }
+
+        Connection = new HubConnectionBuilder()
+            .WithUrl($"https://localhost:5001/bookings?user={UserGuid}")
+            .WithAutomaticReconnect()
+            .Build();
+
+        Connection.On<string, string>("ReceiveBooking", HandleConnection);
+
+        await Connection.StartAsync();
+    }
+
+    private Task HandleConnection(string to, string message)
+    {
+        Console.WriteLine($"Recebido: {message}");
+
+        if (JsonConvert.DeserializeObject<Booking>(message) is Booking booking)
+        {
+            Bookings.Add(booking);
+            Console.WriteLine(JsonConvert.SerializeObject(Bookings));
+            StateHasChanged();
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private async Task HandleRequest(Booking booking, bool isApproved)
+    {
+        booking.IsApproved = isApproved;
+        await Connection.InvokeAsync("SendBooking", booking.User.Guid.ToString(), JsonConvert.SerializeObject(booking));
     }
 }

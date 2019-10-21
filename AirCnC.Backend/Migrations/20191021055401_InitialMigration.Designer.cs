@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirCnC.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191013211154_InitialMigration")]
+    [Migration("20191021055401_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,17 +21,17 @@ namespace AirCnC.Backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AirCnC.Backend.Models.Booking", b =>
+            modelBuilder.Entity("AirCnC.Shared.Models.Booking", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Approved")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
 
                     b.Property<Guid?>("SpotGuid")
                         .HasColumnType("uniqueidentifier");
@@ -48,7 +48,7 @@ namespace AirCnC.Backend.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("AirCnC.Backend.Models.Spot", b =>
+            modelBuilder.Entity("AirCnC.Shared.Models.Spot", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -76,7 +76,7 @@ namespace AirCnC.Backend.Migrations
                     b.ToTable("Spots");
                 });
 
-            modelBuilder.Entity("AirCnC.Backend.Models.User", b =>
+            modelBuilder.Entity("AirCnC.Shared.Models.User", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
@@ -90,20 +90,20 @@ namespace AirCnC.Backend.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AirCnC.Backend.Models.Booking", b =>
+            modelBuilder.Entity("AirCnC.Shared.Models.Booking", b =>
                 {
-                    b.HasOne("AirCnC.Backend.Models.Spot", "Spot")
+                    b.HasOne("AirCnC.Shared.Models.Spot", "Spot")
                         .WithMany()
                         .HasForeignKey("SpotGuid");
 
-                    b.HasOne("AirCnC.Backend.Models.User", "User")
+                    b.HasOne("AirCnC.Shared.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserGuid");
                 });
 
-            modelBuilder.Entity("AirCnC.Backend.Models.Spot", b =>
+            modelBuilder.Entity("AirCnC.Shared.Models.Spot", b =>
                 {
-                    b.HasOne("AirCnC.Backend.Models.User", "User")
+                    b.HasOne("AirCnC.Shared.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserGuid");
                 });

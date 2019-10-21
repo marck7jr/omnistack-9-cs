@@ -47,7 +47,7 @@ namespace AirCnC.Backend.Migrations
                 {
                     Guid = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    Approved = table.Column<bool>(nullable: false),
+                    IsApproved = table.Column<bool>(nullable: false),
                     UserGuid = table.Column<Guid>(nullable: true),
                     SpotGuid = table.Column<Guid>(nullable: true)
                 },

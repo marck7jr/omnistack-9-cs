@@ -80,7 +80,7 @@ namespace AirCnC.Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Booking>> PostAsync([FromBody] Booking booking, [FromHeader] Guid userGuid, [FromRoute] Guid spotGuid)
         {
-            if ((await _context.Users.FindAsync(userGuid)) is User user && (await _context.Spots.FindAsync(spotGuid)) is Spot spot)
+            if ((await _context.Users.FindAsync(userGuid)) is User user && (await _context.Spots.Include(spot => spot.User).FirstOrDefaultAsync(spot => spot.Guid == spotGuid) is Spot spot))
             {
                 booking.User = user;
                 booking.Spot = spot;

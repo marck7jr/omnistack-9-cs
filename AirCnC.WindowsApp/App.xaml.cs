@@ -1,9 +1,15 @@
-﻿using AirCnC.WindowsApp.Views;
+﻿using AirCnC.Shared.Models;
+using AirCnC.WindowsApp.Helpers;
+using AirCnC.WindowsApp.Views;
+using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -35,7 +41,7 @@ namespace AirCnC.WindowsApp
         {
             if (!(Window.Current.Content is Frame rootFrame))
             {
-                ApplyExtendedViewIntoTitleBar();
+                AddExtendedView();
 
                 // Crie um Quadro para atuar como o contexto de navegação e navegue para a primeira página
                 rootFrame = new Frame();
@@ -89,7 +95,7 @@ namespace AirCnC.WindowsApp
             deferral.Complete();
         }
 
-        private static void ApplyExtendedViewIntoTitleBar()
+        private static void AddExtendedView()
         {
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
@@ -105,6 +111,27 @@ namespace AirCnC.WindowsApp
 
             titleBar.ButtonPressedBackgroundColor = accentAltColor;
             titleBar.ButtonPressedForegroundColor = Colors.White;
+        }
+
+        public static async void UseBookingHub(Guid userGuid)
+        {
+            try
+            {
+                await BookingHubHelper.InitializeAsync(userGuid);
+
+                BookingHubHelper.Connection.On<string>("ReceiveBooking", async (booking) =>
+                {
+                    await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                    {
+                        BookingHubHelper.Bookings.Add(JsonConvert.DeserializeObject<Booking>(booking));
+                    });
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
         }
     }
 }
